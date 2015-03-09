@@ -5,7 +5,7 @@
  *      Author: oivantsi
  */
 
-#define pr_fmt	"dummy iface netlink: "
+#define pr_fmt(fmt)	"(dummy iface netlink): " fmt
 
 #include <linux/module.h>
 #include <linux/errno.h>
@@ -157,7 +157,7 @@ static void di_setup(struct net_device *dev)
 {
 	struct dummy_iface *di = netdev_priv(dev);
 
-	DI_TRACE_CALL(error);
+	DI_TRACE_CALL(err);
 
 	/* Fill in the fields of the device structure with Ethernet-generic values. */
 	ether_setup(dev);
@@ -183,7 +183,7 @@ static void di_setup(struct net_device *dev)
  */
 static void di_free(struct net_device *dev)
 {
-	DI_TRACE_CALL(error);
+	DI_TRACE_CALL(err);
 
 	/* Free network device.
 	 * This function does the last stage of destroying an allocated device
@@ -197,7 +197,7 @@ static void di_free(struct net_device *dev)
  */
 static int di_validate(struct nlattr *tb[], struct nlattr *data[])
 {
-	DI_TRACE_CALL(error);
+	DI_TRACE_CALL(err);
 
 	if (tb[IFLA_ADDRESS]) {
 		if (nla_len(tb[IFLA_ADDRESS]) != ETH_ALEN)
@@ -263,7 +263,7 @@ static int di_newlink(struct net *src_net, /* Device namespace */
 {
 	int err;
 
-	DI_TRACE_CALL(error);
+	DI_TRACE_CALL(err);
 
 	err = di_changelink(dev, tb, data);
 	if (err < 0)
@@ -279,7 +279,7 @@ static int di_changelink(struct net_device *dev,
 {
 	struct dummy_iface *di = netdev_priv(dev);
 
-	DI_TRACE_CALL(error);
+	DI_TRACE_CALL(err);
 
 	if (!data)
 		return 0;
@@ -322,14 +322,14 @@ static int di_changelink(struct net_device *dev,
 static void di_dellink(struct net_device *dev,
 			 struct list_head *head)
 {
-	DI_TRACE_CALL(error);
+	DI_TRACE_CALL(err);
 
 	unregister_netdevice_queue(dev, head);
 }
 
 static size_t di_get_size(const struct net_device *dev)
 {
-	DI_TRACE_CALL(error);
+	DI_TRACE_CALL(err);
 
 	return nla_total_size(sizeof(__u8)) + /* IFLA_DUMMY_IFACE_ATTR_0 */
 		nla_total_size(sizeof(__u16)) + /* IFLA_DUMMY_IFACE_ATTR_1 */
@@ -347,7 +347,7 @@ static int di_fill_info(struct sk_buff *skb,
 	struct nlattr *nla_nest;
 	struct dummy_iface *di = netdev_priv(dev);
 
-	DI_TRACE_CALL(error);
+	DI_TRACE_CALL(err);
 
 	err = nla_put_u8(skb, IFLA_DUMMY_IFACE_ATTR_0, di->params.attr0);
 	if (err)
@@ -388,24 +388,21 @@ err_out:
 
 static int di_dev_init(struct net_device *dev)
 {
-	DI_TRACE_CALL(error);
+	DI_TRACE_CALL(err);
 
 	return 0;
-
-nla_failure:
-	return -EMSGSIZE;
 }
 
 static void di_dev_uninit(struct net_device *dev)
 {
-	DI_TRACE_CALL(error);
+	DI_TRACE_CALL(err);
 }
 
 static int di_set_nest_opt(struct dummy_iface *di,
 			   int nest_type,
 			   struct nlattr *data[])
 {
-	DI_TRACE_CALL(error);
+	DI_TRACE_CALL(err);
 
 	if (nest_type != IFLA_DUMMY_IFACE_ATTR_NEST)
 		return -EINVAL;
@@ -424,7 +421,7 @@ static int di_set_opt(struct dummy_iface *di, struct nlattr *data[],
 {
 	int err = 0;
 
-	DI_TRACE_CALL(error);
+	DI_TRACE_CALL(err);
 
 	switch (type) {
 	case IFLA_DUMMY_IFACE_ATTR_0:
@@ -458,21 +455,21 @@ static int di_set_opt(struct dummy_iface *di, struct nlattr *data[],
 
 int dummy_iface_netlink_init(void)
 {
-	DI_TRACE_CALL(error);
+	DI_TRACE_CALL(err);
 
 	return rtnl_link_register(&di_link_ops);
 }
 
 void dummy_iface_netlink_fini(void)
 {
-	DI_TRACE_CALL(error);
+	DI_TRACE_CALL(err);
 
 	rtnl_link_unregister(&di_link_ops);
 }
 
 bool is_dummy_iface(struct net_device *dev)
 {
-	DI_TRACE_CALL(error);
+	DI_TRACE_CALL(err);
 
 	return false;
 }
