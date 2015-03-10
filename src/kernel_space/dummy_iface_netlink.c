@@ -53,12 +53,12 @@ static int di_set_opt(struct dummy_iface *di, struct nlattr *data[],
 	} while(0)
 
 static const struct nla_policy di_policy[IFLA_DUMMY_IFACE_MAX + 1] = {
-		[IFLA_DUMMY_IFACE_ATTR_0]	= { .type = NLA_U8 },
-		[IFLA_DUMMY_IFACE_ATTR_1]	= { .type = NLA_U16 },
-		[IFLA_DUMMY_IFACE_ATTR_2]	= { .type = NLA_U32 },
-		[IFLA_DUMMY_IFACE_ATTR_NEST]	= { .type = NLA_NESTED},
-		[IFLA_DUMMY_IFACE_ATTR_BIN]	= { .type = NLA_BINARY,
-						    .len = sizeof(struct ifla_dummy_iface_bin_attr)}
+	[IFLA_DUMMY_IFACE_ATTR_0]	= { .type = NLA_U8 },
+	[IFLA_DUMMY_IFACE_ATTR_1]	= { .type = NLA_U16 },
+	[IFLA_DUMMY_IFACE_ATTR_2]	= { .type = NLA_U32 },
+	[IFLA_DUMMY_IFACE_ATTR_NEST]	= { .type = NLA_NESTED},
+	[IFLA_DUMMY_IFACE_ATTR_BIN]	= { .type = NLA_BINARY,
+					    .len = sizeof(struct ifla_dummy_iface_bin_attr)}
 };
 
 struct rtnl_link_ops di_link_ops __read_mostly = {
