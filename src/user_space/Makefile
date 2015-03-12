@@ -1,8 +1,8 @@
 CC       = gcc
-CFLAGS   = -g $(shell pkg-config --cflags libnl-3.0)
+CFLAGS   = -g $(shell pkg-config --cflags libnl-3.0) -Wall
 RM       = rm -f
 INC      = -I/usr/include/libnl3/netlink/
-LIB	 = $(shell pkg-config --libs libnl-3.0)
+LIB      = $(shell pkg-config --libs libnl-3.0)
 LIB_PATH = -L/usr/lib64
 
 
